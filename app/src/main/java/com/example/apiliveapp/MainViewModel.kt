@@ -1,20 +1,21 @@
 package com.example.apiliveapp
 
-import android.provider.ContactsContract.Data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.apiliveapp.data.DataSource
-import com.example.apiliveapp.data.model.Fact
+import androidx.lifecycle.viewModelScope
+import com.example.apiliveapp.data.Repository
+import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
-    private val _facts = MutableLiveData<List<Fact>>()
-    val facts : LiveData<List<Fact>>
-        get() = _facts
+    val repository = Repository()
 
-    fun loadFacts(){
-        _facts.value = DataSource.facts
+    val images = repository.images
+
+    fun loadImages() {
+        viewModelScope.launch {
+            repository.loadImages()
+        }
     }
-
 }

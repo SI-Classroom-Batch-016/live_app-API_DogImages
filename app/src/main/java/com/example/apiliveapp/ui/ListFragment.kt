@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.example.apiliveapp.MainViewModel
-import com.example.apiliveapp.R
 import com.example.apiliveapp.databinding.FragmentListBinding
 
 class ListFragment : Fragment() {
@@ -27,15 +26,14 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.refreshFAB.setOnClickListener {
-            //Neue Daten laden
-            viewModel.loadFacts()
+        viewModel.loadImages()
+
+
+        viewModel.images.observe(viewLifecycleOwner){
+            val adapter = ImageAdapter(it)
+            binding.factsRV.adapter = adapter
         }
 
-        viewModel.facts.observe(viewLifecycleOwner){
-            //Neue Daten in die RecyclerView geben
-            binding.factsRV.adapter = FactAdapter(it)
-        }
     }
 
 
